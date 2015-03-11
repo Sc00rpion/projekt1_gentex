@@ -4,15 +4,15 @@
 
 typedef struct {
 	char ** prefix;
-	int n_p;
+	long int n_p;
 	char ** suffix;
 	int size_s;
 	int n_s;
 } ngram;
 
 typedef struct {
-	int number_gram;
-	int size;
+	long int number_gram;
+	long int size;
 	ngram* tab;
 } store;
 

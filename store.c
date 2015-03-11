@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "store.h"
+#include "managment.h"
+
 #define INIT_NGRAM_SIZE 10
 #define INIT_TAB_SIZE 10
-#include "store.h"
 
 static int cmark;
 static store *m = NULL;
@@ -14,7 +16,7 @@ void init (){
 	m->number_gram = 0;
 	m->size = INIT_TAB_SIZE;
 	m->tab = malloc( INIT_TAB_SIZE * sizeof * (m->tab) );
-	int i;
+	long int i;
 	for ( i=0 ; i < INIT_TAB_SIZE ; i++){
 		m->tab[i].size_s = INIT_NGRAM_SIZE;
 		m->tab[i].n_s = 0;
@@ -26,7 +28,7 @@ void init (){
 ngram* search_prefix( char ** prefix){
 	if (m == NULL)
 		init();
-	int i,j;
+	long int i,j;
 	for (i=0; i < m->number_gram; i++)
 		for (j=0; j < cmark ; j++){
 			if (strcmp(prefix[j], m->tab[i].prefix[j]) == 0){
@@ -44,7 +46,7 @@ void add(char **prefix, char * suffix){
 		init();
 	if ((tmp = search_prefix(prefix)) == NULL){
 		resize_ngram();
-		int i;
+		long int i;
 		for ( i=0; i<cmark; i++){
 			m->tab[m->number_gram].prefix[i] = strdup(prefix[i]);
 			(m->tab[m->number_gram].n_p)++;	
@@ -71,11 +73,11 @@ void resize_suffix(ngram* tmp){
 }
 
 void resize_ngram(){ // powiększa główną listę
-	if ( m->number_gram == m->size){
-		int old_size = m->size;
+	if ( m->number_gram >= m->size){
+		long int old_size = m->size;
 		m->size *= 2;
 		m->tab = realloc( m->tab, m->size * sizeof * (m->tab) );
-		int i;
+		long int i;
 		for ( i=old_size ; i < m->size ; i++){
 			m->tab[i].size_s = INIT_NGRAM_SIZE;
 			m->tab[i].n_s = 0;
@@ -87,7 +89,7 @@ void resize_ngram(){ // powiększa główną listę
 }
 
 void print_all(){ // do testów
-	int i,j;
+	long int i,j;
 	for (i=0; i <m->number_gram; i++){
 		for (j=0; j < cmark; j++)
 			printf("%s ",m->tab[i].prefix[j]);
