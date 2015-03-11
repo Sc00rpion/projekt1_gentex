@@ -95,17 +95,16 @@ void print_all(){ // do testów
 		printf("- ");
 		for (j=0; j < m->tab[i].n_s; j++)
 			printf("%s ",m->tab[i].suffix[j]);
+		printf("  %d",m->tab[i].n_s);
 		printf("\n");
 	}
 }
 
 ngram* rand_prefix(){
-	srand(time(NULL));
 	return &(m->tab[rand() % m->number_gram]);
 }
 
 char* rand_suffix(char** prefix){
-	srand(time(NULL));
 	ngram* tmp;
 	tmp = search_prefix(prefix);
 	return tmp->suffix[rand() % tmp->n_s];

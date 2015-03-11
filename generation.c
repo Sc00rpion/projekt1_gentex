@@ -4,9 +4,13 @@
 #include "store.h"
 #include "managment.h"
 #include "reading.h"
-
+#include "generation.h"
+#include <time.h>
 
 void generation(){
+	if (get_name_file_out() == NULL)
+		return;
+	srand(time(NULL));
 	int i, counter = 0;
 	int mark = get_mark();
 	char buf[INIT_SIZE_BUF];
@@ -22,10 +26,11 @@ void generation(){
 		fprintf(out,"%s ",prefix[i]);
 		counter++;
 	}
-	while (counter < 100){
+	while (counter < get_number_words()){
 		strcpy(buf,rand_suffix(prefix));
 		for (i=1; i < mark; i++)
 			strcpy(prefix[i-1],prefix[i]);
+	
 		strcpy(prefix[mark-1],buf);
 		counter++;
 		fprintf(out,"%s ",buf);

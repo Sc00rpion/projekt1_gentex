@@ -7,7 +7,7 @@
 #include "generation.h"
 
 static char* 	name_file_out 		= NULL;
-static int		number_words 		= 0;
+static int		number_words 		= 200;
 static int		number_paragraphs 	= 0;
 static int		number_gram			= 1;
 static char*	name_file_stat		= NULL;
@@ -106,7 +106,6 @@ int main( int argc, char **argv){
 			test(argc, counter-1,"Nie podano plików do analizy");
 		for ( ; counter < argc; counter++)
 			reading(argv[counter]);
-		// print_all();
 		generation();
 	}
 	return 0;
