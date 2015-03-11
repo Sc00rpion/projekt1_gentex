@@ -1,6 +1,8 @@
 #ifndef _STORE_
 #define _STORE_
 
+#define INIT_NGRAM_SIZE 10
+#define INIT_TAB_SIZE 10
 
 typedef struct {
 	char ** prefix;
@@ -29,5 +31,9 @@ void resize_suffix(ngram* tmp);
 void resize_ngram();
 
 void print_all();
+
+ngram* rand_prefix();
+
+char* rand_suffix(char** prefix);
 
 #endif

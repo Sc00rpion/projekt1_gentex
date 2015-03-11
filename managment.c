@@ -4,6 +4,7 @@
 #include "store.h"
 #include "managment.h"
 #include "reading.h"
+#include "generation.h"
 
 static char* 	name_file_out 		= NULL;
 static int		number_words 		= 0;
@@ -13,9 +14,34 @@ static char*	name_file_stat		= NULL;
 static char*	name_file_backup_out= NULL;
 static char*	name_file_backup_in	= NULL;
 
-int mark(){
-	return 2;
+char* get_name_file_out(){
+	return name_file_out;
 }
+
+int get_mark(){
+	return number_gram;
+}
+
+int get_number_words(){
+	return number_words;
+}
+
+int get_nuber_paragraphs(){
+	return number_paragraphs;
+}
+
+char* get_name_file_stat(){
+	return name_file_stat;
+}
+
+char* get_name_file_backup_out(){
+	return name_file_backup_out;
+}
+
+char* get_name_file_backup_in(){
+	return name_file_backup_in;
+}
+
 void info(){
 	printf(		"WYWOŁANIE\n"
 				"gentex [opcje] plik bazowy1.txt plik bazowy2.txt ...\n\n"
@@ -29,8 +55,8 @@ void info(){
 	exit(EXIT_FAILURE);
 }
 
-void test(int argc, int licznik, char* string){
-	if ( licznik+1 >= argc ){
+void test(int argc, int counter, char* string){
+	if ( counter+1 >= argc ){
 		printf("Błędne wywołanie : %s\n\n",string);
 		info();
 	}
@@ -41,47 +67,47 @@ int main( int argc, char **argv){
 		fprintf(stderr,"Podano za mało argumentów\n\n");
 		info();
 	} else {
-		int licznik = 1;
-		while ( licznik < argc ){
-			if (!strcmp(argv[licznik],"-o")){
-				test(argc, licznik,"Nie podano nazwy pliku do zapisu");
-				name_file_out = strdup(argv[licznik+1]); 
+		int counter = 1;
+		while ( counter < argc ){
+			if (!strcmp(argv[counter],"-o")){
+				test(argc, counter,"Nie podano nazwy pliku do zapisu");
+				name_file_out = strdup(argv[counter+1]); 
 			} 
-			else if (!strcmp(argv[licznik],"-s")){
-				test(argc, licznik,"Nie podano liczby słów");
-				number_words = atoi(argv[licznik+1]);
+			else if (!strcmp(argv[counter],"-s")){
+				test(argc, counter,"Nie podano liczby słów");
+				number_words = atoi(argv[counter+1]);
 			} 
-			else if (!strcmp(argv[licznik],"-a")){
-				test(argc, licznik,"Nie podano liczby akapitów");
-				number_paragraphs = atoi(argv[licznik+1]);			
+			else if (!strcmp(argv[counter],"-a")){
+				test(argc, counter,"Nie podano liczby akapitów");
+				number_paragraphs = atoi(argv[counter+1]);			
 			} 
-			else if (!strcmp(argv[licznik],"-n")){
-				test(argc, licznik,"Nie podano rzędu n-gramów");
-				number_gram = atoi(argv[licznik+1]);			
+			else if (!strcmp(argv[counter],"-n")){
+				test(argc, counter,"Nie podano rzędu n-gramów");
+				number_gram = atoi(argv[counter+1]);			
 			} 
-			else if (!strcmp(argv[licznik],"-stat")){
-				test(argc, licznik,"Nie podano nazwy pliku do zapisu statystyk");
-				name_file_stat = strdup(argv[licznik+1]); 			
+			else if (!strcmp(argv[counter],"-stat")){
+				test(argc, counter,"Nie podano nazwy pliku do zapisu statystyk");
+				name_file_stat = strdup(argv[counter+1]); 			
 			} 
-			else if (!strcmp(argv[licznik],"-pout")){
-				test(argc, licznik,"Nie podano nazwy pliku do zapisu pliku pośredniego");
-				name_file_backup_out = strdup(argv[licznik+1]); 			
+			else if (!strcmp(argv[counter],"-pout")){
+				test(argc, counter,"Nie podano nazwy pliku do zapisu pliku pośredniego");
+				name_file_backup_out = strdup(argv[counter+1]); 			
 			} 
-			else if (!strcmp(argv[licznik],"-pin")){
-				test(argc, licznik,"Nie podano nazwy pliku pośredniego");
-				name_file_backup_in = strdup(argv[licznik+1]); 			
+			else if (!strcmp(argv[counter],"-pin")){
+				test(argc, counter,"Nie podano nazwy pliku pośredniego");
+				name_file_backup_in = strdup(argv[counter+1]); 			
 			} 
 			else
 				break;
 				
-			licznik= licznik + 2;
+			counter= counter + 2;
 		}
 		if (name_file_backup_in == NULL)
-			test(argc, licznik-1,"Nie podano plików do analizy");
-		for ( ; licznik < argc; licznik++)
-			reading(argv[licznik]);
-		print_all();
-	
+			test(argc, counter-1,"Nie podano plików do analizy");
+		for ( ; counter < argc; counter++)
+			reading(argv[counter]);
+		// print_all();
+		generation();
 	}
 	return 0;
 }
