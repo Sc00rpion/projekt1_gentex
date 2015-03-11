@@ -8,7 +8,7 @@
 #include <time.h>
 
 void generation(){
-	if (get_name_file_out() == NULL)
+	if (get_name_file_out() == NULL || get_m() == NULL)
 		return;
 	srand(time(NULL));
 	int i, counter = 0;

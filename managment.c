@@ -21,6 +21,9 @@ char* get_name_file_out(){
 int get_mark(){
 	return number_gram;
 }
+void set_mark(int mark){
+	number_gram = mark;
+}
 
 int get_number_words(){
 	return number_words;
@@ -106,6 +109,8 @@ int main( int argc, char **argv){
 			test(argc, counter-1,"Nie podano plików do analizy");
 		for ( ; counter < argc; counter++)
 			reading(argv[counter]);
+		backup();
+		print_all();
 		generation();
 	}
 	return 0;

@@ -9,6 +9,13 @@
 static int mark;
 static store *m = NULL;
 
+store * get_m(){
+	return m;
+}
+void set_m(store * tmp){
+	m = tmp;
+}
+
 void init (){ 
 	mark = get_mark();
 	m = malloc( sizeof *m);
@@ -56,6 +63,20 @@ void add(char **prefix, char * suffix){
 	} else {
 	add_suffix(suffix, tmp);
 	}
+}
+
+void add_from_backup(char **prefix, char **suffix, int n_s){ 
+	if (m == NULL)
+		init();
+	resize_ngram();
+	long int i;
+	for ( i=0; i<mark; i++){
+		m->tab[m->number_gram].prefix[i] = strdup(prefix[i]);
+		(m->tab[m->number_gram].n_p)++;	
+	}
+	for (i=0; i < n_s; i++)
+		add_suffix(suffix[i], &(m->tab[m->number_gram]));
+	(m->number_gram)++;		
 }
 
 void add_suffix(char* suffix, ngram* tmp){
