@@ -110,8 +110,11 @@ int main( int argc, char **argv){
 		for ( ; counter < argc; counter++)
 			reading(argv[counter]);
 		backup();
-		print_all();
 		generation();
+		store * x = get_m();
+		// print_tree( x->t, stdout, 4, fmt );
+		printf(" %d\n", x->number_gram);
+		write_stat(name_file_stat);
 	}
 	return 0;
 }
