@@ -16,122 +16,149 @@ void set_m(store * tmp){
 	m = tmp;
 }
 
+tree_t insert( tree_t t, char **prefix, char * suffix ) {
+	if( t == NULL ) {
+		node_t * n = malloc( sizeof *n );
+		init_ngram(n);
+		int i;
+		for ( i=0; i < mark; i++)
+			n->g->prefix[i] = strdup(prefix[i]);
+		add_suffix(suffix, n->g);
+		add_tab(n->g);
+		n->left = n-> right = NULL;
+		return n;
+	} else if( cmp_prefix(prefix,t->g->prefix) > 0  ) {
+		t->left = insert( t->left, prefix, suffix );
+		return t;
+	} else if( cmp_prefix(prefix,t->g->prefix) < 0 ) { 
+		t->right = insert( t->right, prefix, suffix );
+		return t;
+	} else { 
+		add_suffix(suffix, t->g);
+		return t;
+	}
+}
+
+void add_tab(ngram* tmp){
+	resize_ngram();
+	m->tab[m->number_gram] = tmp;
+	(m->number_gram)++;
+}
+
+
+void add(char **prefix, char * suffix){ 
+	if (m == NULL)
+		init();
+	m->t = insert(m->t, prefix, suffix);
+}
+
+void print_tree( tree_t t, FILE *out, int d, char *formater( const ngram *x ) ) {
+	if( t != NULL ) {
+			if( t->right != NULL )
+				print_tree( t->right, out, d+1, formater );
+			fprintf( out, "%s\n", formater( t->g ) );
+			if( t->left != NULL )
+				print_tree( t->left, out, d+1, formater );
+	}
+}
+
+char * fmt( const ngram *s ) {
+	static char buf[10000000];
+	int i;
+	strcpy(buf,"");
+	for (i = 0; i < mark ; i++){
+		strcat(buf,s->prefix[i]);
+		strcat(buf, " ");
+	}
+	
+	return buf;
+}
+
+void init_ngram(node_t * n){
+	n->g = malloc( sizeof * n->g);
+	n->g->n_s = 0;
+	n->g->size_s = INIT_SUFFIX_SIZE;
+	n->g->prefix = malloc( mark * sizeof * n->g->prefix);
+	n->g->suffix = malloc( INIT_SUFFIX_SIZE * sizeof * n->g->suffix);
+}
+ 
 void init (){ 
 	mark = get_mark();
 	m = malloc( sizeof *m);
+	m->t = NULL;
 	m->number_gram = 0;
+	m->n_s_max = 0;
 	m->size = INIT_TAB_SIZE;
 	m->tab = malloc( INIT_TAB_SIZE * sizeof * (m->tab) );
-	long int i;
-	for ( i=0 ; i < INIT_TAB_SIZE ; i++){
-		m->tab[i].size_s = INIT_NGRAM_SIZE;
-		m->tab[i].n_s = 0;
-		m->tab[i].suffix = malloc( INIT_NGRAM_SIZE * sizeof * (m->tab[i].suffix));
-		m->tab[i].n_p = 0;
-		m->tab[i].prefix = malloc( mark * sizeof * (m->tab[i].prefix));
-	}
 }
-ngram* search_prefix( char ** prefix){
-	if (m == NULL)
-		init();
-	long int i,j;
-	for (i=0; i < m->number_gram; i++)
-		for (j=0; j < mark ; j++){
-			if (strcmp(prefix[j], m->tab[i].prefix[j]) == 0){
-				if ( j == (mark-1)) 
-					return &(m->tab[i]);
-			} else
-				break;
-		}		
-	return NULL;
+int cmp_prefix( char ** prefix, char ** prefix2 ){
+	int i,j;
+	for (j=0; j < mark ; j++){
+		i = strcmp(prefix[j], prefix2[j]);
+		if (i == 0){
+			if ( j == (mark-1)) 
+				return 0;
+		} 
+		else if ( i < 0 )
+			return -1;
+		else
+			return 1;
+	}		
 }
 
-void add(char **prefix, char * suffix){ 
-	ngram* tmp;
-	if (m == NULL)
-		init();
-	if ((tmp = search_prefix(prefix)) == NULL){
-		resize_ngram();
-		long int i;
-		for ( i=0; i<mark; i++){
-			m->tab[m->number_gram].prefix[i] = strdup(prefix[i]);
-			(m->tab[m->number_gram].n_p)++;	
-		}
-		add_suffix(suffix, &(m->tab[m->number_gram]));
-		(m->number_gram)++;
-		
-	} else {
-	add_suffix(suffix, tmp);
-	}
-}
+
 
 void add_from_backup(char **prefix, char **suffix, int n_s){ 
-	if (m == NULL)
-		init();
-	resize_ngram();
-	long int i;
-	for ( i=0; i<mark; i++){
-		m->tab[m->number_gram].prefix[i] = strdup(prefix[i]);
-		(m->tab[m->number_gram].n_p)++;	
-	}
-	for (i=0; i < n_s; i++)
-		add_suffix(suffix[i], &(m->tab[m->number_gram]));
-	(m->number_gram)++;		
+	int i;
+	for ( i=0; i < n_s; i++)
+	add( prefix,suffix[i] );
+	
 }
 
 void add_suffix(char* suffix, ngram* tmp){
 	resize_suffix(tmp);
 	tmp->suffix[tmp->n_s] = strdup(suffix);
 	(tmp->n_s)++;
+	if (tmp->n_s > m->n_s_max)
+		m->n_s_max = tmp->n_s;
 }
 
 void resize_suffix(ngram* tmp){
-	if ( tmp->n_s == tmp->size_s ){
+	if ( tmp->n_s >= tmp->size_s ){
 		tmp->size_s *= 2;
 		tmp->suffix = realloc(tmp->suffix, tmp->size_s * sizeof * (tmp->suffix));
 	}
 }
 
-void resize_ngram(){ // powiększa główną listę
+void resize_ngram(){
 	if ( m->number_gram >= m->size){
-		long int old_size = m->size;
 		m->size *= 2;
 		m->tab = realloc( m->tab, m->size * sizeof * (m->tab) );
-		long int i;
-		for ( i=old_size ; i < m->size ; i++){
-			m->tab[i].size_s = INIT_NGRAM_SIZE;
-			m->tab[i].n_s = 0;
-			m->tab[i].suffix = malloc( INIT_NGRAM_SIZE * sizeof * (m->tab[i].suffix));
-			m->tab[i].n_p = 0;
-			m->tab[i].prefix = malloc( INIT_NGRAM_SIZE * sizeof * (m->tab[i].prefix));
-		}
-	}
-}
-
-void print_all(){ // do testów
-	long int i,j;
-	for (i=0; i <m->number_gram; i++){
-		for (j=0; j < mark; j++)
-			printf("%s ",m->tab[i].prefix[j]);
-		printf("- ");
-		for (j=0; j < m->tab[i].n_s; j++)
-			printf("%s ",m->tab[i].suffix[j]);
-		printf("  %d",m->tab[i].n_s);
-		printf("\n");
 	}
 }
 
 ngram* rand_prefix(){
-	return &(m->tab[rand() % m->number_gram]);
+	return m->tab[rand() % m->number_gram];
 }
 
 char* rand_suffix(char** prefix){
 	ngram* tmp;
-	tmp = search_prefix(prefix);
+	tree_t t = m->t;
+	tmp = search_prefix(t,prefix);
 	return tmp->suffix[rand() % tmp->n_s];
 }
 
-
+ngram* search_prefix(tree_t t, char ** prefix ) {
+	if( cmp_prefix(prefix,t->g->prefix) == 0 ) {
+		return t->g;
+	} else if( cmp_prefix(prefix,t->g->prefix) > 0  ) {
+		return search_prefix( t->left, prefix);
+	} else if( cmp_prefix(prefix,t->g->prefix) < 0 ) { 
+		return search_prefix(t->right, prefix );
+	} else { 
+		return NULL;
+	}
+}
 
 
 
