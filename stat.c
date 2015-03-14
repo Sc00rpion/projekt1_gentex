@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "stat.h"
+#include <math.h>
 
 #define INIT_TAB_STAT_SIZE 100
 
@@ -10,6 +11,7 @@ static tree_stat y = NULL;
 static tab_words ty = NULL;
 static tree_stat g = NULL;
 static tab_words tg = NULL;
+static int all_words = 0;
 
 
 tree_stat insert_stat( tab_words tmpx, tree_stat t, char * word ) {
@@ -49,6 +51,7 @@ void stat_add_word(char * word){
 		ty->size = INIT_TAB_STAT_SIZE;
 	}
 	y = insert_stat(ty, y, word);
+	all_words++;
 }
 
 void stat_add_ngram(char** prefix,char * suffix){
@@ -70,22 +73,67 @@ void stat_add_ngram(char** prefix,char * suffix){
 	g = insert_stat(tg, g, buf);
 }
 
-void write_tab(tab_words tmpx, FILE * out, int amount){
-	int x = amount < tmpx->number ? amount : tmpx->number;
+void write_tab_ty( FILE * out, int amount){
+	int x = amount < ty->number ? amount : ty->number;
 	int i;
+	fprintf(out,"%7s %-20s %-6s\n","l.wys","n-gram", "prawdopodobieństwo");
 	for( i=0; i < x ; i++){
-		fprintf(out,"%7d %s\n", tmpx->tab_words[i]->counter, tmpx->tab_words[i]->word);
+		double probability = get_probability(y, ty->tab_words[i]->word);
+		fprintf(out,"%7d %-20s\t%-6.5g \n", ty->tab_words[i]->counter, ty->tab_words[i]->word, probability);
 	}
 	fprintf(out,"\n");
 }
+
+void write_tab_tg( FILE * out, int amount){
+	int x = amount < tg->number ? amount : tg->number;
+	int i;
+	fprintf(out,"%7s %-20s %-6s \t %s\n","l.wys","n-gram", "prawdopodobieństwo","PMI");
+	for( i=0; i < x ; i++){
+		double probability = get_probability(g, tg->tab_words[i]->word);
+		long double pmi = get_pmi(tg->tab_words[i]->word);
+		fprintf(out,"%7d %-20s\t%-6.5g\t\t %-6.5g \n", tg->tab_words[i]->counter, tg->tab_words[i]->word, probability, pmi);
+	}
+	fprintf(out,"\n");
+}
+
+double get_probability(tree_stat t, char * word){
+	double m = search_word(t, word);
+	return m / all_words;
+}
+
+long double get_pmi(char* wngram){
+	long double mx = 1;
+	char buf[1000];
+	int i, mark = get_mark();
+	for ( i = 0; i <= mark; i++){
+		strcpy(buf,"");
+		sscanf(wngram,"%s",buf);
+		mx *= get_probability(y, buf);
+	}
+	return logl(get_probability(g, wngram) / mx);
+}
+
+int search_word(tree_stat t, char * word){
+	if( t == NULL ) {
+		return NULL;
+	} else if( strcmp(t->word,word) > 0  ) {
+		return search_word(t->left, word );
+	} else if( strcmp(t->word,word) < 0 ) { 
+		return search_word(t->right, word );
+	} else { 
+		return t->counter;
+	}
+}
+
+
 
 void write_stat( char * name_file_stat){
 	if (name_file_stat != NULL) {
 		FILE *out = fopen(name_file_stat, "w");
 		qsort(ty->tab_words,ty->number,sizeof * ty->tab_words,cmp_stat);
 		qsort(tg->tab_words, tg->number, sizeof * tg->tab_words, cmp_stat);
-		write_tab(ty, out, 10);
-		write_tab(tg,out, 10);
+		write_tab_ty(out, 10);
+		write_tab_tg(out, 10);
 		fclose(out);
 	} else
 		return;

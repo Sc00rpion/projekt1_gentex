@@ -1,6 +1,6 @@
 CC = cc -Wall -ggdb
 
-gentex: managment.o reading.o store.o error.o generation.o backup.o stat.o
+gentex: managment.o reading.o store.o error.o generation.o backup.o stat.o -lm
 	$(CC) $^
 
 managment.o: managment.h reading.h store.h generation.h error.h

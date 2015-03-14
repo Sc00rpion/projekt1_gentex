@@ -28,11 +28,20 @@ char * fmt_stat( const tree_stat x );
 
 int cmp_stat(const void * a, const void * b);
 
-void write_tab(tab_words tmp, FILE * out, int amount);
+void write_tab_ty( FILE * out, int amount);
+
+void write_tab_tg( FILE * out, int amount);
+
+double get_probability(tree_stat t, char * word);
+
+int search_word(tree_stat t, char * word);
+
 
 void add_tab_word(tab_words tmp, tree_stat x);
 
 void stat_add_ngram(char** prefix,char * suffix);
+
+long double get_pmi(char* wngram);
 
 #endif
 

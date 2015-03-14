@@ -86,7 +86,7 @@ int main( int argc, char **argv){
 			} 
 			else if (!strcmp(argv[counter],"-n")){
 				test(argc, counter,"Nie podano rzędu n-gramów");
-				number_gram = atoi(argv[counter+1]);			
+				number_gram = atoi(argv[counter+1]) - 1;			
 			} 
 			else if (!strcmp(argv[counter],"-stat")){
 				test(argc, counter,"Nie podano nazwy pliku do zapisu statystyk");
