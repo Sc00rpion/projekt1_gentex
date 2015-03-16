@@ -1,0 +1,95 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[MeX]{polski}
+\usepackage[english,polish]{babel}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{txfonts,qtimes,qtxmath}
+
+\setlength{\headheight}{0pt}
+\setlength{\textheight}{23.5cm}
+\setlength{\textwidth}{15.92cm}
+\setlength{\footnotesep}{5mm}
+\setlength{\footskip}{10mm}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\topmargin}{0mm}
+\setlength{\headsep}{5mm}
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{2.5mm}
+
+
+\title{ \Huge {\textbf{ Specyfikacja funkcjonalna}}}
+\author{Maciej Skarbek \\Nr albumu:271088}
+
+\frenchspacing
+
+\begin{document}
+\maketitle
+
+\begin{itemize}
+\item
+	\texttt{
+		\pmb{NAZWA}
+			\begin{quote}
+			\begin{quote}
+			\begin{quote}
+						gentex - Generator tekstu 		
+			\end{quote}
+			\end{quote}
+			\end{quote}
+			}
+\item
+	\texttt{
+		\pmb{OPIS OGOLNY}
+			\begin{quote}
+			\begin{quote}
+			\begin{quote}
+			Program gentexr - Program ma za zadanie generować tekst wyjściowy(formatu txt) na podstawie analizy innych tekstów(formatu txt) wykorzystując przy tym łańcuchy Markova oraz N-gramy. Aplikacja jest programem konsolowym urochomianym przez podanie odpowiednich parametrów wywołania. Możliwe jest generowanie tekstu o zadanej ilosc słow,akapitów,o zdanym rozmierze oraz wykorzystywanego stopnia N-gramu przy generowaniu tekstu. Program działa w jednym z dwoch trybow. Pierwszy tryb to generowanie tekstu na podstawie 'czystych tekstow'(np:ksiażki,artykuły) oraz tryb generowania tekstu na podstawie pliku posredniego.
+			\end{quote}
+			\end{quote}
+			\end{quote}
+			}
+\item
+	\texttt{
+		\pmb{WYWOŁANIE}
+			\begin{quote}
+			\begin{quote}
+			\begin{quote}
+				gentex [opcje] plik\_bazowy1.txt plik\_bazowy2.txt ...
+			\end{quote}
+			\end{quote}
+			\end{quote}
+			}
+\item
+\texttt{
+	\pmb{OPCJE}
+	\begin{quote}
+		\begin{quote}
+			\begin{quote}
+			\pmb{\large{ -o nazwa\_pliku}}		Nazwa pliku gdzie ma byc zapisany wygenerowany tekst\\\\
+			\pmb{\large{-s liczba\_słów	}}	Liczba słow z jakiej ma sie skladac wygenerowany tekst\\\\
+			\pmb{\large{-a liczba\_akapitów}}	Liczba akapitów z której składac ma sie wygenerowany tekst\\\\
+			\pmb{\large{-n rząd\_n-gramów}}	Rząd n-gramów w oparciu o który będzie generowany tekst\\\\
+			\pmb{\large{-stat nazwa\_pliku}}	Generowanie statystyk tekstu bazowego i wynikowego zapisana do pliku\\\\
+			\pmb{\large{-pout nazwa\_pliku}} Generuje plik posredni w formie binarnej z ktorego mozna uzyc do generowania tekstow\\\\
+			\pmb{\large{-pin nazwa\_pliku}} Generowanie tekstu wynikowego z pliku posredniego
+			\end{quote}
+		\end{quote}
+	\end{quote}
+	}
+\item
+\texttt{
+	\pmb{UWAGI}
+	\begin{quote}
+		\begin{quote}
+			\begin{quote}
+				Plik posredni jest generowany w formie bliku binarnego co ma na celu bezawaryjne i szybkie działanie programu. 		
+			\end{quote}
+		\end{quote}
+	\end{quote}
+}	
+\end{itemize}
+\end{document}
