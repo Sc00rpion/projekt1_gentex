@@ -22,6 +22,12 @@ void stat_add_word(char * word);
 
 void write_stat(char* name_file_stat);
 
+void free_tree_stat(tree_stat t);
+
+void free_all_stat();
+
+void free_tab_words(tab_words t);
+
 void print_tree_stat( tree_stat t, FILE *out, char *formater( const tree_stat x ) ) ;
 
 char * fmt_stat( const tree_stat x );

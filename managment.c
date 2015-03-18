@@ -115,6 +115,11 @@ int main( int argc, char **argv){
 		// print_tree( x->t, stdout, 4, fmt );
 		printf(" %d\n", x->number_gram);
 		write_stat(name_file_stat);
+		free_all_store();
+		free(name_file_out); 		
+		free(name_file_stat);		
+		free(name_file_backup_out);
+		free(name_file_backup_in);	
 	}
 	return 0;
 }

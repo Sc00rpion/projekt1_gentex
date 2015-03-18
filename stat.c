@@ -129,12 +129,13 @@ int search_word(tree_stat t, char * word){
 
 void write_stat( char * name_file_stat){
 	if (name_file_stat != NULL) {
-		FILE *out = fopen(name_file_stat, "w");
+		FILE *out = fopen(name_file_stat, "a");
 		qsort(ty->tab_words,ty->number,sizeof * ty->tab_words,cmp_stat);
 		qsort(tg->tab_words, tg->number, sizeof * tg->tab_words, cmp_stat);
 		write_tab_ty(out, 10);
 		write_tab_tg(out, 10);
 		fclose(out);
+		free_all_stat();
 	} else
 		return;
 }
@@ -148,14 +149,40 @@ int cmp_stat(const void * a, const void * b){
 	
 	
 	
-void print_tree_stat( tree_stat t, FILE *out, char *formater( const tree_stat x ) ) {
+void free_tree_stat(tree_stat t) {
 	if( t != NULL ) {
 			if( t->right != NULL )
-				print_tree_stat( t->right, out, formater );
-			fprintf( out, "%s\n", formater( t ) );
+				free_tree_stat( t->right );
+			free(t->right);
+			free(t->word);
 			if( t->left != NULL )
-				print_tree_stat( t->left, out, formater );
+				free_tree_stat( t->left );
+			free(t->left);
+			free(t);
+	} else
+		free(t);
+}
+
+void free_tab_words(tab_words t){
+	int i;
+	for( i=0; i < t->number; i++){
+		free(t->tab_words[i]->word);
+		free(t->tab_words[i]->left);
+		free(t->tab_words[i]->right);
+		free(t->tab_words[i]);
 	}
+	free(t->tab_words);
+	free(t);
+}
+
+void free_all_stat(){
+	free_tab_words(ty);
+	free_tab_words(tg);	
+	y = NULL;
+	ty = NULL;
+	g = NULL;
+	tg = NULL;
+	all_words = 0;
 }
 
 char * fmt_stat( const tree_stat x ) {

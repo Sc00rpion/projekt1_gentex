@@ -1,4 +1,4 @@
-CC = cc -Wall -ggdb
+CC = cc -g -O0 -Wall -ggdb
 
 gentex: managment.o reading.o store.o error.o generation.o backup.o stat.o -lm
 	$(CC) $^

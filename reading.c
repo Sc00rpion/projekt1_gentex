@@ -15,10 +15,10 @@ void reading( char * name_file){
 	mark = get_mark();
 	int i;
 	char **prefix = malloc(mark * sizeof * prefix); 
-	if (get_name_file_stat() == NULL){
-		for(i = 0; i < mark; i++)
-			prefix[i] = malloc(INIT_SIZE_BUF *sizeof * prefix[i]);
+	for(i = 0; i < mark; i++)
+		prefix[i] = malloc(INIT_SIZE_BUF *sizeof * prefix[i]);
 		
+	if (get_name_file_stat() == NULL){
 		for (i=0; i < mark; i++){
 			if (fscanf(in, "%s",buf) != 1)
 				printf("Błąd");
@@ -31,9 +31,6 @@ void reading( char * name_file){
 			strcpy(prefix[mark-1],buf);
 		}
 	} else {
-		for(i = 0; i < mark; i++)
-			prefix[i] = malloc(INIT_SIZE_BUF *sizeof * prefix[i]);
-		
 		for (i=0; i < mark; i++){
 			if (fscanf(in, "%s",buf) != 1)
 				printf("Błąd");
@@ -51,4 +48,8 @@ void reading( char * name_file){
 		}
 		
 	}
+	for ( i=0; i<mark; i++)
+		free(prefix[i]);
+	free(prefix);
+	fclose(in);
 }

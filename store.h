@@ -26,6 +26,12 @@ typedef struct {
 	int n_s_max;
 } store;
 
+void free_tree_store(tree_t t);
+
+void free_tab(store * t);
+
+void free_all_store();
+
 tree_t insert( tree_t t, char **prefix, char * suffix); 
 
 store * get_m();
