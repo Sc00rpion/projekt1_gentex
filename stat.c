@@ -167,8 +167,6 @@ void free_tab_words(tab_words t){
 	int i;
 	for( i=0; i < t->number; i++){
 		free(t->tab_words[i]->word);
-		free(t->tab_words[i]->left);
-		free(t->tab_words[i]->right);
 		free(t->tab_words[i]);
 	}
 	free(t->tab_words);

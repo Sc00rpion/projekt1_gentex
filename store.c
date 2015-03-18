@@ -16,18 +16,6 @@ void set_m(store * tmp){
 	m = tmp;
 }
 
-// void free_tree_store(tree_t t) {
-	// if( t != NULL ) {
-			// if( t->right != NULL )
-				// free_tree_store( t->right );
-			// free(t->right);
-			// if( t->left != NULL )
-				// free_tree_store( t->left );
-			// free(t->left);
-			// free(t);
-	// } else
-		// free(t);
-// }
 
 void free_tree_store(tree_t t) {
 	if( t != NULL ) {
@@ -59,7 +47,7 @@ void free_all_store(){
 	free_tab(m);
 	free_tree_store(m->t);
 	free(m);
-	set_m(NULL);
+	m = NULL;
 }
 
 tree_t insert( tree_t t, char **prefix, char * suffix ) {
@@ -149,10 +137,9 @@ int cmp_prefix( char ** prefix, char ** prefix2 ){
 			return -1;
 		else
 			return 1;
-	}		
+	}
+		
 }
-
-
 
 void add_from_backup(char **prefix, char **suffix, int n_s){ 
 	int i;

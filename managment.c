@@ -8,7 +8,7 @@
 
 static char* 	name_file_out 		= NULL;
 static int		number_words 		= 200;
-static int		number_paragraphs 	= 0;
+static int		number_paragraphs 	= 1;
 static int		number_gram			= 1;
 static char*	name_file_stat		= NULL;
 static char*	name_file_backup_out= NULL;
@@ -29,7 +29,7 @@ int get_number_words(){
 	return number_words;
 }
 
-int get_nuber_paragraphs(){
+int get_number_paragraphs(){
 	return number_paragraphs;
 }
 
@@ -109,17 +109,29 @@ int main( int argc, char **argv){
 			test(argc, counter-1,"Nie podano plików do analizy");
 		for ( ; counter < argc; counter++)
 			reading(argv[counter]);
+		
 		backup();
 		generation();
-		store * x = get_m();
-		// print_tree( x->t, stdout, 4, fmt );
-		printf(" %d\n", x->number_gram);
 		write_stat(name_file_stat);
 		free_all_store();
-		free(name_file_out); 		
-		free(name_file_stat);		
-		free(name_file_backup_out);
-		free(name_file_backup_in);	
+		if (name_file_stat != NULL && name_file_out != NULL){
+			reading_stat(name_file_out);
+			write_stat(name_file_stat);
+			free_all_managment();
+		}
+		free_all_managment();
+		
 	}
 	return 0;
+}
+
+void free_all_managment(){
+		if (name_file_out != NULL)
+			free(name_file_out);
+		if (name_file_stat != NULL) 		
+			free(name_file_stat);	
+		if (name_file_backup_out != NULL)	
+			free(name_file_backup_out);
+		if (name_file_backup_in != NULL)
+			free(name_file_backup_in);
 }
