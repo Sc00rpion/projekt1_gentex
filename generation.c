@@ -18,10 +18,13 @@ void generation(){
 	int words = get_number_words();
 	char buf[INIT_SIZE_BUF];
 	FILE *out = fopen(get_name_file_out(),"a");
-	char **prefix = malloc(mark * sizeof * prefix); 
-	for(i = 0; i < mark; i++)
+	fatal(out == NULL, "Nie udało się otworzyć pliku do zapisu tekstu docelowego");
+	char **prefix = malloc(mark * sizeof * prefix);
+	fatal(prefix == NULL , "Nie udało się przydzielić pamięci");	
+	for(i = 0; i < mark; i++){
 		prefix[i] = malloc(INIT_SIZE_BUF *sizeof * prefix[i]);
-		
+		fatal(prefix[i] == NULL , "Nie udało się przydzielić pamięci");
+	}
 	ngram* tmp =rand_prefix();
 	while (isalpha(tmp->prefix[0][0]) == 0)
 		tmp = rand_prefix();

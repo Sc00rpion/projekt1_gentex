@@ -17,7 +17,9 @@ static int all_words = 0;
 tree_stat insert_stat( tab_words tmpx, tree_stat t, char * word ) {
 	if( t == NULL ) {
 		word_t * n = malloc( sizeof *n );
+		fatal(n == NULL , "Nie udało się przydzielić pamięci");
 		n->word = strdup(word);
+		fatal(n->word == NULL , "Nie udało się przydzielić pamięci");
 		n->counter = 1;
 		n->left = n-> right = NULL;
 		add_tab_word(tmpx, n);
@@ -38,6 +40,7 @@ void add_tab_word(tab_words tmpx, tree_stat x){
 	if (tmpx->size <= tmpx->number){
 		tmpx->size *=2;
 		tmpx->tab_words = realloc (tmpx->tab_words, tmpx->size * sizeof * tmpx->tab_words);
+		fatal(tmpx->tab_words == NULL , "Nie udało się przydzielić pamięci");
 	}
 	tmpx->tab_words[tmpx->number] = x;
 	tmpx->number++;
@@ -46,7 +49,9 @@ void add_tab_word(tab_words tmpx, tree_stat x){
 void stat_add_word(char * word){
 	if (ty == NULL){
 		ty = malloc(sizeof * ty);
+		fatal(ty == NULL , "Nie udało się przydzielić pamięci");
 		ty->tab_words = malloc ( INIT_TAB_STAT_SIZE * sizeof * ty->tab_words);
+		fatal(ty->tab_words == NULL , "Nie udało się przydzielić pamięci");
 		ty->number = 0;
 		ty->size = INIT_TAB_STAT_SIZE;
 	}
@@ -57,7 +62,9 @@ void stat_add_word(char * word){
 void stat_add_ngram(char** prefix,char * suffix){
 	if (tg == NULL){
 		tg = malloc(sizeof * tg);
+		fatal(tg == NULL , "Nie udało się przydzielić pamięci");
 		tg->tab_words = malloc ( INIT_TAB_STAT_SIZE * sizeof * tg->tab_words);
+		fatal(tg->tab_words == NULL , "Nie udało się przydzielić pamięci");
 		tg->number = 0;
 		tg->size = INIT_TAB_STAT_SIZE;
 	}
@@ -98,6 +105,7 @@ void write_tab_tg( FILE * out, int amount){
 
 double get_probability(tree_stat t, char * word){
 	double m = search_word(t, word);
+	fatal(all_words == 0 , "Nie wolno dzielić przez zero - all_words = 0");
 	return m / all_words;
 }
 
@@ -107,9 +115,10 @@ long double get_pmi(char* wngram){
 	int i, mark = get_mark();
 	for ( i = 0; i <= mark; i++){
 		strcpy(buf,"");
-		sscanf(wngram,"%s",buf);
+		fatal( sscanf(wngram,"%s",buf) != 1, "Błąd ilości słów w prefiksie");
 		mx *= get_probability(y, buf);
 	}
+	fatal(mx == 0, "Błąd dzielenia przez zero");
 	return logl(get_probability(g, wngram) / mx);
 }
 
@@ -130,6 +139,7 @@ int search_word(tree_stat t, char * word){
 void write_stat( char * name_file_stat){
 	if (name_file_stat != NULL) {
 		FILE *out = fopen(name_file_stat, "a");
+		fatal(out == NULL , "Nie udało utworzyć pliku statystyk");
 		qsort(ty->tab_words,ty->number,sizeof * ty->tab_words,cmp_stat);
 		qsort(tg->tab_words, tg->number, sizeof * tg->tab_words, cmp_stat);
 		write_tab_ty(out, 10);

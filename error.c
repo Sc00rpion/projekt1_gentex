@@ -4,6 +4,6 @@
 
 void fatal(int err, const char *msg){
     if (!err) return;
-    fprintf(stderr, "%s\n", msg);
+    fprintf(stderr, "\n%s \n", msg);
     exit(EXIT_FAILURE);
 }

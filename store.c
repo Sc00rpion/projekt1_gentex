@@ -53,10 +53,13 @@ void free_all_store(){
 tree_t insert( tree_t t, char **prefix, char * suffix ) {
 	if( t == NULL ) {
 		node_t * n = malloc( sizeof *n );
+		fatal(n == NULL , "Nie udało się przydzielić pamięci");
 		init_ngram(n);
 		int i;
-		for ( i=0; i < mark; i++)
+		for ( i=0; i < mark; i++){
 			n->g->prefix[i] = strdup(prefix[i]);
+			fatal(n->g->prefix[i] == NULL , "Nie udało się przydzielić pamięci");
+		}
 		add_suffix(suffix, n->g);
 		add_tab(n->g);
 		n->left = n-> right = NULL;
@@ -110,20 +113,25 @@ char * fmt( const ngram *s ) {
 
 void init_ngram(node_t * n){
 	n->g = malloc( sizeof * n->g);
+	fatal(n->g == NULL , "Nie udało się przydzielić pamięci");
 	n->g->n_s = 0;
 	n->g->size_s = INIT_SUFFIX_SIZE;
 	n->g->prefix = malloc( mark * sizeof * n->g->prefix);
+	fatal(n->g->prefix == NULL , "Nie udało się przydzielić pamięci");
 	n->g->suffix = malloc( INIT_SUFFIX_SIZE * sizeof * n->g->suffix);
+	fatal(n->g->suffix == NULL , "Nie udało się przydzielić pamięci");
 }
  
 void init (){ 
 	mark = get_mark();
 	m = malloc( sizeof *m);
+	fatal(m == NULL , "Nie udało się przydzielić pamięci");
 	m->t = NULL;
 	m->number_gram = 0;
 	m->n_s_max = 0;
 	m->size = INIT_TAB_SIZE;
 	m->tab = malloc( INIT_TAB_SIZE * sizeof * (m->tab) );
+	fatal( m->tab == NULL , "Nie udało się przydzielić pamięci");
 }
 int cmp_prefix( char ** prefix, char ** prefix2 ){
 	int i,j;
@@ -151,6 +159,7 @@ void add_from_backup(char **prefix, char **suffix, int n_s){
 void add_suffix(char* suffix, ngram* tmp){
 	resize_suffix(tmp);
 	tmp->suffix[tmp->n_s] = strdup(suffix);
+	fatal(tmp->suffix[tmp->n_s] == NULL , "Nie udało się przydzielić pamięci");
 	(tmp->n_s)++;
 	if (tmp->n_s > m->n_s_max)
 		m->n_s_max = tmp->n_s;
@@ -160,6 +169,7 @@ void resize_suffix(ngram* tmp){
 	if ( tmp->n_s >= tmp->size_s ){
 		tmp->size_s *= 2;
 		tmp->suffix = realloc(tmp->suffix, tmp->size_s * sizeof * (tmp->suffix));
+		fatal( tmp->suffix == NULL , "Nie udało się przydzielić pamięci");
 	}
 }
 
@@ -167,6 +177,7 @@ void resize_ngram(){
 	if ( m->number_gram >= m->size){
 		m->size *= 2;
 		m->tab = realloc( m->tab, m->size * sizeof * (m->tab) );
+		fatal( m->tab == NULL , "Nie udało się przydzielić pamięci");
 	}
 }
 

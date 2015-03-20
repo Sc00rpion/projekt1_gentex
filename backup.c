@@ -16,29 +16,35 @@ void backup(){
 		return;
 	store* m = get_m();
 	mark = get_mark();
-	if (get_name_file_backup_in() != NULL && m == NULL){
+	if (get_name_file_backup_in() != NULL){
 		FILE *in = fopen(get_name_file_backup_in(),"r");
+		fatal(in == NULL , "Nie udało się otworzyć pliku pośredniego");
 		char buf[INIT_SIZE_BUF];
 		int i,j,n_s, number_gram, n_s_max;
-		fscanf(in,"%d %d %d",&mark, &number_gram, &n_s_max);
+		fatal( fscanf(in,"%d %d %d",&mark, &number_gram, &n_s_max) != 3, "Zła struktura pliku pośredniego");
 		set_mark(mark);
 		printf("%d",n_s_max);
 
-		char **prefix = malloc(mark * sizeof * prefix); 
-		for(i = 0; i < mark; i++)
+		char **prefix = malloc(mark * sizeof * prefix);
+		fatal(prefix == NULL , "Nie udało się przydzielić pamięci");		
+		for(i = 0; i < mark; i++){
 			prefix[i] = malloc(INIT_SIZE_BUF *sizeof * prefix[i]);
-			
+			fatal(prefix[i] == NULL , "Nie udało się przydzielić pamięci");
+		}
 		char **suffix = malloc(n_s_max * sizeof * suffix); 
-		for(i = 0; i < n_s_max; i++)
+		fatal(suffix == NULL , "Nie udało się przydzielić pamięci");
+		for(i = 0; i < n_s_max; i++){
 			suffix[i] = malloc(INIT_SIZE_BUF *sizeof * suffix[i]);
+			fatal(suffix[i] == NULL , "Nie udało się przydzielić pamięci");
+		}
 		for (j=0; j < number_gram; j++){
 			for (i=0; i < mark; i++){
-				fscanf(in,"%s",buf);
+				fatal( fscanf(in,"%s",buf) != 1, "Zła struktura pliku pośredniego");
 				strcpy(prefix[i],buf);
 			}
-			fscanf(in,"%d",&n_s);
+			fatal( fscanf(in,"%d",&n_s) != 1, "Zła struktura pliku pośredniego");
 			for (i=0; i < n_s; i++){
-				fscanf(in,"%s",buf);
+				fatal( fscanf(in,"%s",buf) != 1, "Zła struktura pliku pośredniego");
 				strcpy(suffix[i], buf);
 			}
 			add_from_backup(prefix, suffix, n_s);
@@ -47,6 +53,7 @@ void backup(){
 	}
 	else{
 		FILE *out = fopen(get_name_file_backup_out(),"w");
+		fatal(out == NULL , "Nie udało się utworzyć pliku pośredniego");
 		fprintf(out,"%d %d %d \n",mark, m->number_gram, m->n_s_max);
 		long int i,j;
 		for (i=0; i <m->number_gram; i++){

@@ -86,7 +86,8 @@ int main( int argc, char **argv){
 			} 
 			else if (!strcmp(argv[counter],"-n")){
 				test(argc, counter,"Nie podano rzędu n-gramów");
-				number_gram = atoi(argv[counter+1]) - 1;			
+				number_gram = atoi(argv[counter+1]) - 1;
+				fatal(number_gram < 1 , "Zbyt mały rząd n-gramów");
 			} 
 			else if (!strcmp(argv[counter],"-stat")){
 				test(argc, counter,"Nie podano nazwy pliku do zapisu statystyk");
@@ -94,11 +95,13 @@ int main( int argc, char **argv){
 			} 
 			else if (!strcmp(argv[counter],"-pout")){
 				test(argc, counter,"Nie podano nazwy pliku do zapisu pliku pośredniego");
-				name_file_backup_out = strdup(argv[counter+1]); 			
+				name_file_backup_out = strdup(argv[counter+1]);
+				fatal( name_file_backup_in != NULL, "Nie ma potrzeby wczytywania pliku pośredniego i generowania go");
 			} 
 			else if (!strcmp(argv[counter],"-pin")){
 				test(argc, counter,"Nie podano nazwy pliku pośredniego");
-				name_file_backup_in = strdup(argv[counter+1]); 			
+				name_file_backup_in = strdup(argv[counter+1]); 
+								fatal( name_file_backup_out != NULL, "Nie ma potrzeby wczytywania pliku pośredniego i generowania go");
 			} 
 			else
 				break;
