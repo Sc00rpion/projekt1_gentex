@@ -47,7 +47,9 @@
 	
 		\begin{itemize}
 			
-			\item void add(char **prefix, char * suffix) \\
+			\item \textit{void add(char **prefix, char * suffix)} \\
+			prefix - tablica wyrazów z których składa sie prefiks \\
+			suffix - sufiks \\
 			Rozpoznanie argumentów wywołania i przekazanie sterowania do odpowiednich modułów.
 			
 		\end{itemize}
@@ -56,7 +58,7 @@
 	
 		\begin{itemize}
 			\item Struktury \\
-			$\begin{array}{lll}
+		$	\begin{array}{lll}
 				typedef struct \{ 				& typedef struct node \{ 					& typedef struct \{ \\ 
 				\hspace{1em}char ** prefix; 	& 	\hspace{1em}ngram * g; 					& \hspace{1em}	tree\_t t; \\ 
 				\hspace{1em}char ** suffix; 	& 	\hspace{1em}struct node *left, *right; 	& \hspace{1em}	int number\_gram; \\ 
@@ -68,16 +70,25 @@
 			
 			Tworzone jest drzewo do przechowywania prefiksów i sufiksów jak również tablica w której będą wskaźniki do komurek drzewa. Tablica będzie używana przy losowaniu prefiksów jak również przy tworzeniu pliku pośredniego (gdybyśmy chcieli stworzyć plik pośredni z drzewa był by on posortowany i przy wczytywaniu zamiast drzewo powstała by nam lista co znacząco wydłużyło by czas pracy programu).
 			
-			\item tree\_t insert( tree\_t t, char **prefix, char * suffix )\\
+			\item \textit{tree\_t insert( tree\_t t, char **prefix, char * suffix )}\\
+			return - funkcja zwraca drzewo z dodanym elementem \\
+			t - drzewo do którego ma zostac dodany element \\
+			prefix - tablica wyrazów z których składa sie prefiks \\
+			suffix - sufiks \\
 			Wstawia do drzewa prefiksy i sufiksy, jeśli prefiks juz istnieje to dopisuje tylko sufiks. Dodaje również wzkaźnik na "ngram" do "tab".
 			
-			\item void add\_from\_backup(char **prefix, char **suffix, int n\_s) \\
+			\item \textit{void add\_from\_backup(char **prefix, char **suffix, int n\_s)} \\
+			prefix - tablica wyrazów z których składa sie prefiks \\
+			suffix - tablica wszystkich sufiksów dla danego prefiksu \\			
 			Dodaje prefiks i całą listę sufiksów do drzewa.
 			
-			\item ngram* rand\_prefix() \\
+			\item \textit{ngram* rand\_prefix()} \\
+			return - zwraca strukturę pokazaną wyżej\\
 			Losuje prefiks.
 			
-			\item char* rand\_suffix(char** prefix)\\
+			\item \textit{char* rand\_suffix(char** prefix)}\\
+			return - zwraca sufiks \\
+			prefix - tablica wyrazów z których składa sie prefiks \\ 
 			Losuje sufiks dla podanego prefiksu.
 			
 		\end{itemize}
@@ -85,7 +96,7 @@
 	\subsection*{generation} 
 		\begin{itemize}
 			
-			\item void generation()\\
+			\item \textit{void generation()}\\
 			Generuje tekst wynikowy i zapisuje go do pliku.
 			
 		\end{itemize}
@@ -93,7 +104,8 @@
 	\subsection*{reading} 
 		\begin{itemize}
 			
-			\item void reading( char * name\_file)\\
+			\item \textit{void reading( char * name\_file)}\\
+			 name\_file - plik który ma zostać zanalizowany i wczytany do "store" \\
 			Czyta podany plik, dzieli na prefiksy i sufiksy a następnie przekazuje do "store" i "stat".
 			
 		\end{itemize}
@@ -101,33 +113,44 @@
 	\subsection*{backup} 
 		\begin{itemize}
 			
-			\item void backup()\\
+			\item \textit{void backup()}\\
 			Tworzy plik wczytuje i tworzy plik pośredni.
 			
 		\end{itemize}
 	\subsection*{stats}
 		\begin{itemize}
 			
-			\item void stat\_add\_word(char * word) \\
+			\item \textit{void stat\_add\_word(char * word)} \\
+			word - wyraz przeczytany z pliku poddanego analizie \\
 			Dodaje pojedynczy wyraz do drzewa ze statystykami (zlicza ilośc wystąpień).
 			
-			\item void stat\_add\_ngram(char** prefix,char * suffix)\\
+			\item \textit{void stat\_add\_ngram(char** prefix,char * suffix)}\\
+			prefix - tablica wyrazów z których składa sie prefiks \\
+			suffix - sufiks \\
 			Dodaje n-gram do drzewa ze statystykami i zlicza ilość wystąpień.
 			
-			\item double get\_probability(tree\_stat t, char * word)\\
+			\item \textit{double get\_probability(tree\_stat t, char * word)}\\
+			return - zwraca prawdopodobieństwo \\
+			t - nazwa drzewa w którym mamy szukać wyrazu(może to być kilka wyrazów) i informacji o ilości wystąpień \\
+			word - wyraz dla którego liczone jest prawdopodobieństwo \\
 			Liczy prawdopodobieństwo dla n-gramu.
 			
-			\item long double get\_pmi(char* wngram)\\
+			\item \textit{long double get\_pmi(char* wngram)}\\
+			return - zwraca wartość wskaźnika PMI \\
+			wngram - napis dal którego ma być liczony wskaźnik \\
 			Liczy wskaźnik PMI dla n-gramu.
 			
-			\item void write\_stat( char * name\_file\_stat)\\
+			\item \textit{void write\_stat( char * name\_file\_stat)}\\
+			name\_file\_stat - nazwa pliku do którego mają być zapisywane statystyki
 			Zapisuje statystyki do podanego pliku.
 			
 		\end{itemize}
 	\subsection*{error} 
 		\begin{itemize}
 			
-			\item void fatal(int err, const char *msg)\\
+			\item \textit{void fatal(int err, const char *msg)}\\
+			err - instrukcja logiczna która warunkuje wystąpienie błędu np. uchwyt\_do\_pliku == NULL \\
+			msg - Wiadomość która ma zostać wyświetlona w przypadku spełnienia się warunku \\
 			Dostaje wyrażenie logiczne "err" i w przypadku potwierdzenia wystąpienia błędu pokazuje wiadomość "msg" i np. zamyka program.
 		\end{itemize}
 
@@ -154,7 +177,10 @@
 			
 		\end{itemize}
 
-\section*{Diagram modułów} \begin{figure}
+\section*{Diagram modułów} 
+
+	Znaczenie strzałki (moduł1 $\longrightarrow$ moduł2) moduł1 korzysta z jakiejś funkcji w moduł2.
+\begin{figure}
 \centering
 \includegraphics[width=0.89\linewidth]{E:/Copy/Studia/Git/projekt1_gentex/Specyfikacja/projekt1_gentex1}
 \caption{}

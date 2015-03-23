@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.3.9)  16 MAR 2015 21:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.3.9)  23 MAR 2015 20:41
 entering extended mode
 **implementacyjna.tex
 (E:\Copy\Studia\Git\projekt1_gentex\Specyfikacja\implementacyjna.tex
@@ -474,57 +474,59 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 50.
  [1]
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <12> on input line 59.
+(Font)              <12> on input line 61.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <8> on input line 59.
+(Font)              <8> on input line 61.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <6> on input line 59.
+(Font)              <6> on input line 61.
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--68
+Underfull \hbox (badness 10000) in paragraph at lines 60--70
 $[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--68
+Underfull \hbox (badness 10000) in paragraph at lines 60--70
 
  []
 
-[2] [3]
-<E:/Copy/Studia/Git/projekt1_gentex/Specyfikacja/projekt1_gentex1.png, id=19, 6
+[2] [3] [4]
+<E:/Copy/Studia/Git/projekt1_gentex/Specyfikacja/projekt1_gentex1.png, id=23, 6
 90.58pt x 1129.21875pt>
 File: E:/Copy/Studia/Git/projekt1_gentex/Specyfikacja/projekt1_gentex1.png Grap
 hic file (type png)
 
 <use E:/Copy/Studia/Git/projekt1_gentex/Specyfikacja/projekt1_gentex1.png>
 Package pdftex.def Info: E:/Copy/Studia/Git/projekt1_gentex/Specyfikacja/projek
-t1_gentex1.png used on input line 159.
+t1_gentex1.png used on input line 185.
 (pdftex.def)             Requested size: 403.14107pt x 659.2205pt.
 
 
-LaTeX Warning: Float too large for page by 17.41406pt on input line 162.
+LaTeX Warning: Float too large for page by 17.41406pt on input line 188.
 
-[4] [5 <E:/Copy/Studia/Git/projekt1_gentex/Specyfikacja/projekt1_gentex1.png (P
+[5] [6 <E:/Copy/Studia/Git/projekt1_gentex/Specyfikacja/projekt1_gentex1.png (P
 NG copy)>] (E:\Copy\Studia\Git\projekt1_gentex\Specyfikacja\implementacyjna.aux
 ) ) 
 Here is how much of TeX's memory you used:
- 2508 strings out of 493921
- 31497 string characters out of 3144874
+ 2510 strings out of 493921
+ 31518 string characters out of 3144874
  83436 words of memory out of 3000000
- 5762 multiletter control sequences out of 15000+200000
- 17331 words of font info for 54 fonts, out of 3000000 for 9000
+ 5763 multiletter control sequences out of 15000+200000
+ 17869 words of font info for 55 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,10n,24p,447b,235s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,10n,24p,447b,237s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/Maciej/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/pl/plms.enc}{C:/
 Users/Maciej/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/pl/plmi.enc}{C:/Users/M
-aciej/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/pl/plrm.enc}<C:/Program Files 
-(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Maciej/App
-Data/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plbx12.pfb><C:/Users/Maciej/AppDa
-ta/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plmi12.pfb><C:/Users/Maciej/AppData
-/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plr12.pfb><C:/Users/Maciej/AppData/Ro
-aming/MiKTeX/2.9/fonts/type1/public/pl/plsy10.pfb>
-Output written on implementacyjna.pdf (6 pages, 168152 bytes).
+aciej/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/pl/plit.enc}{C:/Users/Maciej/A
+ppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/pl/plrm.enc}<C:/Program Files (x86)/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Maciej/AppData/Ro
+aming/MiKTeX/2.9/fonts/type1/public/pl/plbx12.pfb><C:/Users/Maciej/AppData/Roam
+ing/MiKTeX/2.9/fonts/type1/public/pl/plmi12.pfb><C:/Users/Maciej/AppData/Roamin
+g/MiKTeX/2.9/fonts/type1/public/pl/plr12.pfb><C:/Users/Maciej/AppData/Roaming/M
+iKTeX/2.9/fonts/type1/public/pl/plsy10.pfb><C:/Users/Maciej/AppData/Roaming/MiK
+TeX/2.9/fonts/type1/public/pl/plti12.pfb>
+Output written on implementacyjna.pdf (7 pages, 181407 bytes).
 PDF statistics:
- 45 PDF objects out of 1000 (max. 8388607)
+ 55 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
