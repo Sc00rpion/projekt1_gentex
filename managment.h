@@ -17,4 +17,8 @@ char* get_name_file_backup_out();
 
 char* get_name_file_backup_in();
 
+void free_all_managment();
+
+void set_mark(int mark);
+
 #endif

@@ -7,6 +7,8 @@
 #include "generation.h"
 #include <time.h>
 #include <ctype.h>
+#include "error.h"
+
 
 void generation(){
 	if (get_name_file_out() == NULL || get_m() == NULL)

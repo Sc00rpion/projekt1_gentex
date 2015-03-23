@@ -5,6 +5,9 @@
 #include "managment.h"
 #include "reading.h"
 #include "generation.h"
+#include "stat.h"
+#include "error.h"
+
 
 static char* 	name_file_out 		= NULL;
 static int		number_words 		= 200;

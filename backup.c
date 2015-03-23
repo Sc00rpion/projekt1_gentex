@@ -6,6 +6,7 @@
 #include "reading.h"
 #include "generation.h"
 #include <time.h>
+#include "error.h"
 
 #define INIT_SIZE_SUFFIX 10000
 

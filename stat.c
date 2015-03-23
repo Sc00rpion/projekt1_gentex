@@ -4,6 +4,7 @@
 #include <time.h>
 #include "stat.h"
 #include <math.h>
+#include "error.h"
 
 #define INIT_TAB_STAT_SIZE 100
 
@@ -12,6 +13,7 @@ static tab_words ty = NULL;
 static tree_stat g = NULL;
 static tab_words tg = NULL;
 static int all_words = 0;
+static int is_destination_file = 0;
 
 
 tree_stat insert_stat( tab_words tmpx, tree_stat t, char * word ) {
@@ -142,10 +144,15 @@ void write_stat( char * name_file_stat){
 		fatal(out == NULL , "Nie udało utworzyć pliku statystyk");
 		qsort(ty->tab_words,ty->number,sizeof * ty->tab_words,cmp_stat);
 		qsort(tg->tab_words, tg->number, sizeof * tg->tab_words, cmp_stat);
+		if (is_destination_file == 0 ) 
+			fprintf(out,"\nStatystyki plików bazowych: \n\n");
+		else
+			fprintf(out,"\nStatystyki pliku wygenerowanego: \n\n");
 		write_tab_ty(out, 10);
 		write_tab_tg(out, 10);
 		fclose(out);
 		free_all_stat();
+		is_destination_file++;
 	} else
 		return;
 }

@@ -44,6 +44,8 @@ char * fmt( const ngram *s );
 
 void init ();
 
+void add_from_backup(char **prefix, char **suffix, int n_s);
+
 void init_ngram(node_t * n);
 
 int cmp_prefix( char ** prefix, char ** prefix2 );

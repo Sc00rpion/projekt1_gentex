@@ -5,6 +5,7 @@
 #include "store.h"
 #include "managment.h"
 #include "stat.h"
+#include "error.h"
 
 
 static int mark;
